@@ -19,7 +19,7 @@
 ### Example
 
 ```javascript
-const figgyPudding = require('figgyPudding')
+const figgyPudding = require('figgy-pudding')
 
 const RequestOpts = figgyPudding({
   follow: {
