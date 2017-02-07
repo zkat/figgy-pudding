@@ -2,7 +2,7 @@
 
 # Death to the God Object! Now Bring Us Some Figgy Pudding!
 
-[`figgy-pudding`](https://github.com/zkat/figgy-pudding) is a simple JavaScript library for managing and composing cascading options objects -- hiding what needs to be hidden from each layer, without having to do a lot of manual munging and passing of options.
+[`figgy-pudding`](https://github.com/zkat/figgy-pudding) is a JavaScript library for managing and composing cascading options objects -- hiding what needs to be hidden from each layer, without having to do a lot of manual munging and passing of options.
 
 ## Install
 
@@ -58,7 +58,7 @@ function reqStuff (uri, opts) {
 ### Features
 
 * Top-down options
-* Hide options from layer that didn't ask for it
+* Hide options from layers that didn't ask for it
 * Shared multi-layer options
 * Immutable by default
 
@@ -90,13 +90,13 @@ const MyAppOpts = figgyPudding({
 
 Instantiates an options object defined by `figgyPudding()`. The returned object
 will be immutable and non-extensible, and will only include properties defined
-in the Opts spec.
+in the `Opts` spec.
 
-The returned opts object can be made mutable by making `metaOpts.mutable` true.
+The returned `Opts` object can be made mutable by making `metaOpts.mutable` true.
 
 `options` can be either a plain object or another `Opts` object. In the latter
 case, the original root options (a plain object) will be used as a fallback
-for properties missing from `options`
+for properties missing from `options`.
 
 ##### Example
 
