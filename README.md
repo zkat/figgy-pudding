@@ -1,5 +1,7 @@
 # figgy-pudding [![npm version](https://img.shields.io/npm/v/figgy-pudding.svg)](https://npm.im/figgy-pudding) [![license](https://img.shields.io/npm/l/figgy-pudding.svg)](https://npm.im/figgy-pudding) [![Travis](https://img.shields.io/travis/zkat/figgy-pudding.svg)](https://travis-ci.org/zkat/figgy-pudding) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/zkat/figgy-pudding?svg=true)](https://ci.appveyor.com/project/zkat/figgy-pudding) [![Coverage Status](https://coveralls.io/repos/github/zkat/figgy-pudding/badge.svg?branch=latest)](https://coveralls.io/github/zkat/figgy-pudding?branch=latest)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/zkat/figgy-pudding.svg)](https://greenkeeper.io/)
+
 # Death to the God Object! Now Bring Us Some Figgy Pudding!
 
 [`figgy-pudding`](https://github.com/zkat/figgy-pudding) is a simple JavaScript library for managing and composing cascading options objects -- hiding what needs to be hidden from each layer, without having to do a lot of manual munging and passing of options.
