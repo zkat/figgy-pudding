@@ -42,7 +42,6 @@ function processKey (key, spec, opts, root) {
   : opts.__root__ && opts.__root__[key] !== undefined
   ? opts.__root__[key]
   : spec[key].default
-  // TODO: validate(spec[key], val)
   return val
 }
 
