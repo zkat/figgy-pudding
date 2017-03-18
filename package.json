@@ -24,7 +24,7 @@
   "dependencies": {},
   "devDependencies": {
     "nyc": "^10.0.0",
-    "standard": "^8.6.0",
+    "standard": "^9.0.2",
     "tap": "^10.0.2"
   }
 }
