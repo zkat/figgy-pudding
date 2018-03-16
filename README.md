@@ -6,7 +6,7 @@
 
 ## Install
 
-`$ npm install --save figgy-pudding`
+`$ npm install figgy-pudding`
 
 ## Table of Contents
 
@@ -19,9 +19,9 @@
 ### Example
 
 ```javascript
-const figgyPudding = require('figgyPudding')
+const puddin = require('figgyPudding')
 
-const RequestOpts = figgyPudding({
+const RequestOpts = puddin({
   follow: {
     default: true
   },
@@ -33,7 +33,7 @@ const RequestOpts = figgyPudding({
   }
 })
 
-const MyAppOpts = figgyPudding({
+const MyAppOpts = puddin({
   log: {
     default: require('npmlog')
   },
@@ -44,8 +44,8 @@ const MyAppOpts = figgyPudding({
 
 function start (opts) {
   opts = MyAppOpts(opts)
-  initCache(opts.cache)
-  opts.streaming // => undefined
+  initCache(opts.get('cache'))
+  opts.get('streaming') // => undefined
   reqStuff('https://npm.im/figgy-pudding', opts)
 }
 
@@ -57,46 +57,46 @@ function reqStuff (uri, opts) {
 
 ### Features
 
-* Top-down options
 * Hide options from layer that didn't ask for it
 * Shared multi-layer options
-* Immutable by default
-
-### Guide
-
-#### Introduction
 
 ### API
 
-#### <a name="figgy-pudding"></a> `> figgyPudding({ key: { default: val }})`
+#### <a name="figgy-pudding"></a> `> figgyPudding({ key: { default: val } | String }, [opts])`
 
-Defines an Options object that can be used to collect only the needed options.
+Defines an Options constructor that can be used to collect only the needed
+options.
 
 An optional `default` property for specs can be used to specify default values
 if nothing was passed in.
+
+If the value for a spec is a string, it will be treated as an alias to that
+other key.
 
 ##### Example
 
 ```javascript
 const MyAppOpts = figgyPudding({
+  lg: 'log',
   log: {
-    default: require('npmlog')
+    default: () => require('npmlog')
   },
   cache: {}
 })
 ```
 
-#### <a name="opts"></a> `> Opts(options, metaOpts)`
+#### <a name="opts"></a> `> Opts(...providers)`
 
-Instantiates an options object defined by `figgyPudding()`. The returned object
-will be immutable and non-extensible, and will only include properties defined
-in the Opts spec.
+Instantiates an options object defined by `figgyPudding()`, which uses
+`providers`, in order, to find requested properties.
 
-The returned opts object can be made mutable by making `metaOpts.mutable` true.
+Each provider can be either a plain object, a `Map`-like object (that is, one
+with a `.get()` method) or another figgyPudding `Opts` object.
 
-`options` can be either a plain object or another `Opts` object. In the latter
-case, the original root options (a plain object) will be used as a fallback
-for properties missing from `options`
+When nesting `Opts` objects, their properties will not become available to the
+new object, but any further nested `Opts` that reference that property _will_ be
+able to read from their grandparent, as long as they define that key. Default
+values for nested `Opts` parents will be used, if found.
 
 ##### Example
 
@@ -110,11 +110,12 @@ const opts = ReqOpts({
   log: require('npmlog')
 })
 
-opts.follow // => true
-opts.log // => false (not defined by ReqOpts)
+opts.get('follow') // => true
+opts.get('log') // => Error: ReqOpts does not define `log`
 
 const MoreOpts = figgyPudding({
   log: {}
 })
 MoreOpts(opts).log // => npmlog object (passed in from original plain obj)
+MoreOpts(opts).get('follow') // => Error: MoreOpts does not define `follow`
 ```

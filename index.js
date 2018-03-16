@@ -1,51 +1,56 @@
 'use strict'
 
-module.exports = figgyPudding
-function figgyPudding (spec) {
-  var optSpec = new OptSpec(spec)
-  function factory (opts, metaOpts) {
-    return new (optSpec.Opts)(opts, metaOpts)
+class FiggyPudding {
+  constructor (specs, opts, providers) {
+    this.specs = specs || {}
+    this.opts = opts || (() => false)
+    this.providers = providers
+    this.isFiggyPudding = true
   }
-  factory.derive = deriveOpts
-  return factory
+  get (key) {
+    return pudGet(this, key, true)
+  }
 }
 
-function OptSpec (spec) {
-  this.isOptSpec = true
-  this.spec = spec
-  this.derivatives = []
-  this.Opts = buildOpts(this)
-}
-
-function buildOpts (spec) {
-  return function Opts (opts, pudOpts) {
-    opts = opts || {}
-    pudOpts = pudOpts || {}
-    var pud = this
-    Object.defineProperty(pud, '__root__', {
-      enumerable: false,
-      value: opts.__root__ || opts
-    })
-    Object.keys(spec.spec).forEach(function (key) {
-      pud[key] = processKey(key, spec.spec, opts)
-    })
-    Object.preventExtensions(pud)
-    if (!pudOpts.mutable) {
-      Object.freeze(pud)
+function pudGet (pud, key, validate) {
+  let spec = pud.specs[key]
+  if (typeof spec === 'string') {
+    key = spec
+    spec = pud.specs[key]
+  }
+  if (validate && !spec && (!pud.opts.other || !pud.opts.other(key))) {
+    throw new Error(`invalid config key requested: ${key}`)
+  } else {
+    if (!spec) { spec = {} }
+    let ret
+    for (let p of pud.providers) {
+      if (p.isFiggyPudding) {
+        ret = pudGet(p, key, false)
+      } else if (typeof p.get === 'function') {
+        ret = p.get(key)
+      } else {
+        ret = p[key]
+      }
+      if (ret !== undefined) {
+        break
+      }
+    }
+    if (ret === undefined && spec.default !== undefined) {
+      if (typeof spec.default === 'function') {
+        return spec.default()
+      } else {
+        return spec.default
+      }
+    } else {
+      return ret
     }
   }
 }
 
-function processKey (key, spec, opts, root) {
-  var val = opts[key] !== undefined
-  ? opts[key]
-  : opts.__root__ && opts.__root__[key] !== undefined
-  ? opts.__root__[key]
-  : spec[key].default
-  return val
-}
-
-function deriveOpts (pudding) {
-  this.derivatives.push(pudding)
-  return this
+module.exports = figgyPudding
+function figgyPudding (specs, opts) {
+  function factory () {
+    return new FiggyPudding(specs, opts, [].slice.call(arguments))
+  }
+  return factory
 }
