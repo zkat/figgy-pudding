@@ -23,7 +23,7 @@
     "yummy"
   ],
   "author": "Kat Marchán <kzm@sykosomatic.org>",
-  "license": "CC0-1.0",
+  "license": "ISC",
   "dependencies": {},
   "devDependencies": {
     "standard": "^8.6.0",
