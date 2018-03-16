@@ -36,6 +36,18 @@ test('passing through no args is ok', t => {
   t.done()
 })
 
+test('passing in null providers is ok', t => {
+  const testOpts = puddin({
+    a: {}
+  })
+  const opts = testOpts(null, {a: 1, b: 2}, false, undefined)
+  t.equal(opts.get('a'), 1, 'defined opt fetched')
+  t.throws(() => {
+    opts.get('b')
+  }, /invalid config key requested: b/i)
+  t.done()
+})
+
 test('supports defaults', t => {
   const testOpts = puddin({
     a: {default: 1},

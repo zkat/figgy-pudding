@@ -50,7 +50,11 @@ function pudGet (pud, key, validate) {
 module.exports = figgyPudding
 function figgyPudding (specs, opts) {
   function factory () {
-    return new FiggyPudding(specs, opts, [].slice.call(arguments))
+    return new FiggyPudding(
+      specs,
+      opts,
+      [].slice.call(arguments).filter(x => x != null && typeof x === 'object')
+    )
   }
   return factory
 }
