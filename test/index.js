@@ -27,6 +27,15 @@ test('Map-like support', t => {
   t.done()
 })
 
+test('passing through no args is ok', t => {
+  const testOpts = puddin()
+  const opts = testOpts({b: 2})
+  t.throws(() => {
+    opts.get('b')
+  }, /invalid config key requested: b/i)
+  t.done()
+})
+
 test('supports defaults', t => {
   const testOpts = puddin({
     a: {default: 1},
