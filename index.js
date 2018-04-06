@@ -4,7 +4,9 @@ class FiggyPudding {
   constructor (specs, opts, providers) {
     this.specs = specs || {}
     this.opts = opts || (() => false)
-    this.providers = providers
+    this.providers = reverse((providers || []).filter(
+      x => x != null && typeof x === 'object'
+    ))
     this.isFiggyPudding = true
   }
   get (key) {
@@ -49,12 +51,18 @@ function pudGet (pud, key, validate) {
 
 module.exports = figgyPudding
 function figgyPudding (specs, opts) {
-  function factory () {
+  function factory (...providers) {
     return new FiggyPudding(
       specs,
       opts,
-      [].slice.call(arguments).filter(x => x != null && typeof x === 'object')
+      providers
     )
   }
   return factory
+}
+
+function reverse (arr) {
+  const ret = []
+  arr.forEach(x => ret.unshift(x))
+  return ret
 }

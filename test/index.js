@@ -93,7 +93,7 @@ test('multiple providers', t => {
     b: {},
     c: {}
   })
-  const opts = testOpts({a: 1}, {a: 2, b: 2}, {a: 3, b: 3, c: 3})
+  const opts = testOpts({a: 3, b: 3, c: 3}, {a: 2, b: 2}, {a: 1})
   t.equal(opts.get('a'), 1, 'a from first provider')
   t.equal(opts.get('b'), 2, 'b from second provider')
   t.equal(opts.get('c'), 3, 'c from third provider')
