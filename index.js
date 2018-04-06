@@ -12,6 +12,13 @@ class FiggyPudding {
   get (key) {
     return pudGet(this, key, true)
   }
+  concat (...moreConfig) {
+    return new FiggyPudding(
+      this.specs,
+      this.opts,
+      reverse(this.providers).concat(moreConfig)
+    )
+  }
 }
 
 function pudGet (pud, key, validate) {

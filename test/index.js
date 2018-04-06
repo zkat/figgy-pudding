@@ -148,4 +148,19 @@ test('nested pud defaults', t => {
   t.done()
 })
 
+test('concat', t => {
+  const testOpts = puddin({
+    a: {},
+    b: {},
+    c: {}
+  })
+  let opts = testOpts()
+  opts = opts.concat({a: 3, b: 3, c: 3})
+  t.equal(opts.get('c'), 3, 'c from third provider')
+  opts = opts.concat({a: 2, b: 2}, {a: 1})
+  t.equal(opts.get('a'), 1, 'a from first provider')
+  t.equal(opts.get('b'), 2, 'b from second provider')
+  t.done()
+})
+
 test('is delicious and figgy')
