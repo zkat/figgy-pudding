@@ -1,6 +1,6 @@
 {
   "name": "figgy-pudding",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Delicious, festive, cascading config/opts definitions",
   "main": "index.js",
   "files": [
