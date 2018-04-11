@@ -163,4 +163,38 @@ test('concat', t => {
   t.done()
 })
 
+test('proxy', t => {
+  const testOpts = puddin({
+    a: {},
+    b: {}
+  })
+  let opts = testOpts({a: 1})
+  t.equal('a' in opts, true, 'provided opt detected')
+  t.equal('b' in opts, false, 'missing opt undetected')
+  t.equal('c' in opts, false, 'undefined opt undetected')
+  t.equal(opts.a, 1, 'provided key retrieved')
+  t.doesNotThrow(
+    () => {
+      opts.__woo = 'woo'
+    },
+    'setting private keys is possible'
+  )
+  t.equal(opts.__woo, 'woo', 'private key retrieved')
+  t.throws(
+    () => {
+      opts.b = 'yo'
+    },
+    /figgyPudding options cannot be modified/i,
+    'setting non-private keys is forbidden'
+  )
+  t.throws(
+    () => {
+      delete opts.a
+    },
+    /figgyPudding options cannot be deleted/i,
+    'deleting keys is forbidden'
+  )
+  t.done()
+})
+
 test('is delicious and figgy')
