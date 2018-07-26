@@ -13,11 +13,11 @@ class FiggyPudding {
     return pudGet(this, key, true)
   }
   concat (...moreConfig) {
-    return new FiggyPudding(
+    return new Proxy(new FiggyPudding(
       this.__specs,
       this.__opts,
       reverse(this.__providers).concat(moreConfig)
-    )
+    ), proxyHandler)
   }
 }
 
