@@ -46,7 +46,7 @@ function pudGet (pud, key, validate) {
     }
     if (ret === undefined && spec.default !== undefined) {
       if (typeof spec.default === 'function') {
-        return spec.default()
+        return spec.default(pud)
       } else {
         return spec.default
       }
