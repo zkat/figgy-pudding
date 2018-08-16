@@ -89,6 +89,7 @@ const proxyHandler = {
     if (
       prop === 'concat' ||
       prop === 'get' ||
+      typeof prop === 'symbol' ||
       prop.slice(0, 2) === '__'
     ) {
       return obj[prop]
@@ -96,7 +97,10 @@ const proxyHandler = {
     return obj.get(prop)
   },
   set (obj, prop, value) {
-    if (prop.slice(0, 2) === '__') {
+    if (
+      typeof prop === 'symbol' ||
+      prop.slice(0, 2) === '__'
+    ) {
       obj[prop] = value
     } else {
       throw new Error('figgyPudding options cannot be modified. Use .concat() instead.')
