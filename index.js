@@ -34,7 +34,7 @@ class FiggyPudding {
   }
   toJSON () {
     const obj = {}
-    this.forEach(([key, val]) => {
+    this.forEach((val, key) => {
       obj[key] = val
     })
     return obj
@@ -56,8 +56,8 @@ class FiggyPudding {
     }
   }
   * [Symbol.iterator] () {
-    for (let key of Object.keys(this.__specs)) {
-      yield [key, this.get(key)]
+    for (let [key, value] of this.entries()) {
+      yield [key, value]
     }
   }
   * keys () {
