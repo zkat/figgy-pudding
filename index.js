@@ -37,9 +37,20 @@ class FiggyPudding {
     })
     return obj
   }
-  * entries () {
+  * entries (_matcher) {
     for (let key of Object.keys(this.__specs)) {
       yield [key, this.get(key)]
+    }
+    const matcher = this.__opts.other || _matcher
+    if (matcher) {
+      for (let p of this.__providers) {
+        const iter = p.entries ? p.entries(matcher) : Object.entries(p)
+        for (let [key, val] of iter) {
+          if (matcher(key)) {
+            yield [key, val]
+          }
+        }
+      }
     }
   }
   * [Symbol.iterator] () {
@@ -48,13 +59,13 @@ class FiggyPudding {
     }
   }
   * keys () {
-    for (let key of Object.keys(this.__specs)) {
+    for (let [key] of this.entries()) {
       yield key
     }
   }
   * values () {
-    for (let key of Object.keys(this.__specs)) {
-      yield this.get(key)
+    for (let [, value] of this.entries()) {
+      yield value
     }
   }
   concat (...moreConfig) {
@@ -74,10 +85,16 @@ try {
   }
 } catch (e) {}
 
+function BadKeyError (key) {
+  throw Object.assign(new Error(
+    `invalid config key requested: ${key}`
+  ), {code: 'EBADKEY'})
+}
+
 function pudGet (pud, key, validate) {
   let spec = pud.__specs[key]
   if (validate && !spec && (!pud.__opts.other || !pud.__opts.other(key))) {
-    throw new Error(`invalid config key requested: ${key}`)
+    BadKeyError(key)
   } else {
     if (!spec) { spec = {} }
     let ret
