@@ -74,20 +74,6 @@ test('allow programmatic keys', t => {
   t.done()
 })
 
-test('aliases', t => {
-  const testOpts = puddin({
-    a: {},
-    b: 'a',
-    c: {}
-  })
-  const opts = testOpts({a: 1, c: 2})
-  t.equal(opts.get('a'), 1, 'base opt fetched normally')
-  t.equal(opts.get('b'), 1, 'opt fetchable through alias')
-  t.equal(opts.get('c'), 2, 'other opt unaffected')
-  t.equal(testOpts({b: 3}).get('a'), 3, 'reverse alias works')
-  t.done()
-})
-
 test('multiple providers', t => {
   const testOpts = puddin({
     a: {},
