@@ -26,6 +26,37 @@ class FiggyPudding {
   get (key) {
     return pudGet(this, key, true)
   }
+  get [Symbol.toStringTag] () { return 'FiggyPudding' }
+  forEach (fn, thisArg = this) {
+    [...this.entries()].forEach(e => fn.call(thisArg, e))
+  }
+  toJSON () {
+    const obj = {}
+    this.forEach(([key, val]) => {
+      obj[key] = val
+    })
+    return obj
+  }
+  * entries () {
+    for (let key of Object.keys(this.__specs)) {
+      yield [key, this.get(key)]
+    }
+  }
+  * [Symbol.iterator] () {
+    for (let key of Object.keys(this.__specs)) {
+      yield [key, this.get(key)]
+    }
+  }
+  * keys () {
+    for (let key of Object.keys(this.__specs)) {
+      yield key
+    }
+  }
+  * values () {
+    for (let key of Object.keys(this.__specs)) {
+      yield this.get(key)
+    }
+  }
   concat (...moreConfig) {
     return new Proxy(new FiggyPudding(
       this.__specs,
@@ -34,6 +65,14 @@ class FiggyPudding {
     ), proxyHandler)
   }
 }
+try {
+  const util = require('util')
+  FiggyPudding.prototype[util.inspect.custom] = function (depth, opts) {
+    return (
+      this[Symbol.toStringTag] + ' ' || ''
+    ) + util.inspect(this.toJSON(), opts)
+  }
+} catch (e) {}
 
 function pudGet (pud, key, validate) {
   let spec = pud.__specs[key]
@@ -85,12 +124,14 @@ const proxyHandler = {
   has (obj, prop) {
     return pudGet(obj, prop, false) !== undefined
   },
+  ownKeys (obj) {
+    return Object.keys(obj.__specs)
+  },
   get (obj, prop) {
     if (
-      prop === 'concat' ||
-      prop === 'get' ||
       typeof prop === 'symbol' ||
-      prop.slice(0, 2) === '__'
+      prop.slice(0, 2) === '__' ||
+      prop in FiggyPudding.prototype
     ) {
       return obj[prop]
     }
