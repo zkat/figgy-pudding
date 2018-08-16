@@ -2,6 +2,7 @@
 
 const test = require('tap').test
 const puddin = require('../')
+const util = require('util')
 
 test('basic toJSON', t => {
   const testOpts = puddin({
@@ -63,5 +64,20 @@ test('toJSON for nested puddings with opts.other', t => {
     ['special-a', 3],
     ['special-b', 4]
   ], 'expected order even with nested opts.others')
+  t.done()
+})
+
+test('util.inspect support', t => {
+  const testOpts = puddin({
+    a: {}
+  })
+  const opts = testOpts({
+    a: 1
+  })
+  t.equal(
+    util.inspect(opts, {color: false}),
+    'FiggyPudding { a: 1 }',
+    'has a custom util.inspect method'
+  )
   t.done()
 })
