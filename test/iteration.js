@@ -89,3 +89,28 @@ test('values', t => {
   ], '.values() iterates over values')
   t.done()
 })
+
+test('opts.other iteration', t => {
+  const testOpts = puddin({
+    a: {}
+  }, {
+    other (key) { return /^special-/.test(key) }
+  })
+  const arr = []
+  const opts = testOpts({
+    'special-a': 3,
+    a: 1,
+    b: 2,
+    'special-b': 4,
+    'a-special': 5
+  })
+  for (let [key, value] of opts.entries()) {
+    arr.push([key, value])
+  }
+  t.deepEqual(arr, [
+    ['a', 1],
+    ['special-a', 3],
+    ['special-b', 4]
+  ], 'iterates over opts.other keys after primary keys')
+  t.done()
+})

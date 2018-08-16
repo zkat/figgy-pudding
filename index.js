@@ -17,7 +17,7 @@ class FiggyPudding {
         }
       }
     })
-    this.__opts = opts || (() => false)
+    this.__opts = opts || {}
     this.__providers = reverse((providers || []).filter(
       x => x != null && typeof x === 'object'
     ))
@@ -43,12 +43,14 @@ class FiggyPudding {
     for (let key of Object.keys(this.__specs)) {
       yield [key, this.get(key)]
     }
-    const matcher = this.__opts.other || _matcher
+    const matcher = _matcher || this.__opts.other
     if (matcher) {
+      const seen = new Set()
       for (let p of this.__providers) {
         const iter = p.entries ? p.entries(matcher) : Object.entries(p)
         for (let [key, val] of iter) {
-          if (matcher(key)) {
+          if (matcher(key) && !seen.has(key)) {
+            seen.add(key)
             yield [key, val]
           }
         }
