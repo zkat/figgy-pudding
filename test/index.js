@@ -9,6 +9,8 @@ test('basic property fetching', t => {
   })
   const opts = testOpts({a: 1, b: 2})
   t.equal(opts.get('a'), 1, 'defined opt fetched')
+  t.ok('a' in opts, 'supports `in` keyword')
+  t.notOk('b' in opts, '`in` false for non-declared props')
   t.throws(() => {
     opts.get('b')
   }, /invalid config key requested: b/i)

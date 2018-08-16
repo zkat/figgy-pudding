@@ -143,7 +143,7 @@ function tryGet (key, p) {
 
 const proxyHandler = {
   has (obj, prop) {
-    return pudGet(obj, prop, false) !== undefined
+    return prop in obj.__specs && pudGet(obj, prop, false) !== undefined
   },
   ownKeys (obj) {
     return Object.keys(obj.__specs)
