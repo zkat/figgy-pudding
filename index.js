@@ -28,7 +28,9 @@ class FiggyPudding {
   }
   get [Symbol.toStringTag] () { return 'FiggyPudding' }
   forEach (fn, thisArg = this) {
-    [...this.entries()].forEach(e => fn.call(thisArg, e))
+    for (let [key, value] of this.entries()) {
+      fn.call(thisArg, value, key, this)
+    }
   }
   toJSON () {
     const obj = {}
