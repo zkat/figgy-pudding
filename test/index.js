@@ -150,4 +150,9 @@ test('concat', t => {
   t.done()
 })
 
-test('is delicious and figgy')
+test('is delicious and figgy', t => {
+  const testOpts = puddin({})
+  let opts = testOpts()
+  t.ok(opts.__isFiggyPudding, 'definitely figgy and delicious')
+  t.done()
+})
