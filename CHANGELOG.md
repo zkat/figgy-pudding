@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/zkat/figgy-pudding/compare/v3.4.0...v3.4.1) (2018-08-16)
+
+
+### Bug Fixes
+
+* **forEach:** get forEach to behave like a normal forEach ([c064755](https://github.com/zkat/figgy-pudding/commit/c064755))
+* **has:** get `in` keyword working right ([fafc5a8](https://github.com/zkat/figgy-pudding/commit/fafc5a8))
+* **iteration:** fix and test iteration of opts.other keys ([7a76217](https://github.com/zkat/figgy-pudding/commit/7a76217))
+* **iteration:** use proper args for forEach/toJSON ([974e879](https://github.com/zkat/figgy-pudding/commit/974e879))
+* **proxy:** make sure proxy corner-cases work ok ([8c66e45](https://github.com/zkat/figgy-pudding/commit/8c66e45))
+* **set:** fix and test the exceptions to writing ([206793b](https://github.com/zkat/figgy-pudding/commit/206793b))
+
+
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/zkat/figgy-pudding/compare/v3.3.0...v3.4.0) (2018-08-16)
 
