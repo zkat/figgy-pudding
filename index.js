@@ -164,6 +164,7 @@ const proxyHandler = {
       prop.slice(0, 2) === '__'
     ) {
       obj[prop] = value
+      return true
     } else {
       throw new Error('figgyPudding options cannot be modified. Use .concat() instead.')
     }

@@ -15,6 +15,23 @@ test('basic property fetching', t => {
   t.done()
 })
 
+test('read-only for most opts', t => {
+  const testOpts = puddin({
+    a: {}
+  })
+  const opts = testOpts({a: 1})
+  t.throws(() => {
+    opts.a = 2
+  }, /cannot be modified/)
+  t.doesNotThrow(() => {
+    opts.__a = 'a'
+  }, '__-prefixed can be written')
+  t.doesNotThrow(() => {
+    opts[Symbol('hi')] = 'hi'
+  }, 'Symbols can be written')
+  t.done()
+})
+
 test('Map-like support', t => {
   const testOpts = puddin({
     a: {}
