@@ -18,7 +18,7 @@ class FiggyPudding {
       }
     })
     this.__opts = opts || {}
-    this.__providers = reverse((providers || []).filter(
+    this.__providers = reverse((providers).filter(
       x => x != null && typeof x === 'object'
     ))
     this.__isFiggyPudding = true
@@ -84,7 +84,7 @@ try {
   const util = require('util')
   FiggyPudding.prototype[util.inspect.custom] = function (depth, opts) {
     return (
-      this[Symbol.toStringTag] + ' ' || ''
+      this[Symbol.toStringTag] + ' '
     ) + util.inspect(this.toJSON(), opts)
   }
 } catch (e) {}
