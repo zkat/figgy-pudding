@@ -9,11 +9,20 @@ test('basic property fetching', t => {
   })
   const opts = testOpts({a: 1, b: 2})
   t.equal(opts.get('a'), 1, 'defined opt fetched')
+  t.equal(opts.a, 1, 'works through a proxy too')
   t.ok('a' in opts, 'supports `in` keyword')
   t.notOk('b' in opts, '`in` false for non-declared props')
   t.throws(() => {
     opts.get('b')
   }, /invalid config key requested: b/i)
+  t.throws(() => {
+    opts.b // eslint-disable-line
+  }, /invalid config key requested: b/i)
+  t.throws(() => {
+    delete opts.a
+  }, /cannot be deleted/)
+  // NOTE: The following doesn't seem to work, and it seems to be a Node/V8 bug
+  // t.deepEqual(Object.keys(opts), ['a'], 'got keys correctly')
   t.done()
 })
 

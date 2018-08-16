@@ -169,7 +169,7 @@ const proxyHandler = {
       throw new Error('figgyPudding options cannot be modified. Use .concat() instead.')
     }
   },
-  delete () {
+  deleteProperty () {
     throw new Error('figgyPudding options cannot be deleted. Use .concat() and shadow them instead.')
   }
 }
