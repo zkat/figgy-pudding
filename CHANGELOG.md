@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/zkat/figgy-pudding/compare/v3.3.0...v3.4.0) (2018-08-16)
+
+
+### Features
+
+* **iterator:** allow iteration over "other" keys ([3c53323](https://github.com/zkat/figgy-pudding/commit/3c53323))
+
+
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/zkat/figgy-pudding/compare/v3.2.1...v3.3.0) (2018-08-16)
 
