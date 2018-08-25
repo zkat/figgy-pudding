@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/zkat/figgy-pudding/compare/v3.5.0...v3.5.1) (2018-08-25)
+
+
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/zkat/figgy-pudding/compare/v3.4.1...v3.5.0) (2018-08-25)
 
