@@ -4,6 +4,10 @@ const test = require('tap').test
 const puddin = require('../')
 const util = require('util')
 
+function entries (obj) {
+  return Object.keys(obj).map(k => [k, obj[k]])
+}
+
 test('basic toJSON', t => {
   const testOpts = puddin({
     a: {}
@@ -33,7 +37,7 @@ test('toJSON for puddings with `opts.other`', t => {
     'special-b': 4,
     'a-special': 5
   })
-  t.deepEqual(Object.entries(opts.toJSON()), [
+  t.deepEqual(entries(opts.toJSON()), [
     ['a', 1],
     ['special-a', 3],
     ['special-b', 4]
@@ -59,7 +63,7 @@ test('toJSON for nested puddings with opts.other', t => {
     b: 2,
     'special-a': 3
   })))
-  t.deepEqual(Object.entries(opts.toJSON()), [
+  t.deepEqual(entries(opts.toJSON()), [
     ['a', 1],
     ['special-a', 3],
     ['special-b', 4]
