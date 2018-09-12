@@ -21,6 +21,11 @@ test('forEach', t => {
     [1, 'a', opts],
     [2, 'b', opts]
   ], 'correct arguments, and only declared props, in declared order')
+
+  opts.forEach(function () {
+    thisArg = this
+  })
+  t.equal(thisArg, opts, 'correct default this')
   t.done()
 })
 
