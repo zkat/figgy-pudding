@@ -116,6 +116,24 @@ const MyAppOpts = figgyPudding({
 })
 ```
 
+##### `opts`
+
+###### `other(key: String) -> Boolean`
+
+Additional keys can be allowed, if they pass the test in this function
+
+###### Example
+
+```javascript
+const MyOtherOpts = puddin({
+  a: {}
+}, {
+  other (key) { return /^special-/.test(key) }
+})
+```
+
+This will allow values that start with `special-`
+
 #### <a name="pudding-factory"></a> `> PuddingFactory(...providers) -> FiggyPudding{}`
 
 Instantiates an options object defined by `figgyPudding()`, which uses
