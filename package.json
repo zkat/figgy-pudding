@@ -3,6 +3,7 @@
   "version": "3.5.1",
   "description": "Delicious, festive, cascading config/opts definitions",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "*.js",
     "lib"
