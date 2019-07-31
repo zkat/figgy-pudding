@@ -1,7 +1,6 @@
-'use strict'
+import * as puddin from '../index'
 
-const test = require('tap').test
-const puddin = require('../')
+const test = (title: string, fn: (t: any) => void) => {}
 
 test('forEach', t => {
   const testOpts = puddin({
@@ -17,15 +16,15 @@ test('forEach', t => {
     arr.push(args)
   }, expectedThis)
   t.equal(thisArg, expectedThis, 'correct thisArg')
+  opts.forEach(function (...args) {
+    thisArg = this
+    arr.push(args)
+  })
+  t.equal(thisArg, opts, 'correct default this')
   t.deepEqual(arr, [
     [1, 'a', opts],
     [2, 'b', opts]
   ], 'correct arguments, and only declared props, in declared order')
-
-  opts.forEach(function () {
-    thisArg = this
-  })
-  t.equal(thisArg, opts, 'correct default this')
   t.done()
 })
 
@@ -64,6 +63,7 @@ test('entries over nested puddings', t => {
     ['a', 1],
     ['b', 2]
   ], 'reaches into nested puddings even if they don\'t declare a key')
+  testOpt
   t.done()
 })
 
