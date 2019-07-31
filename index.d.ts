@@ -5,6 +5,8 @@ declare function figgyPudding<
 >(specs?: S, opts?: O): figgyPudding.PuddingFactory<S, O>
 
 declare module figgyPudding {
+  type Flatten<T extends [any, ...any[]]> = T extends [infer H] ? H : {} 
+
   interface Options {
     other?(key: string): boolean
   }
@@ -38,9 +40,9 @@ declare module figgyPudding {
     [key: string]: unknown
   } : {})
 
-  type ProxyFiggyPudding<S, O> = Readonly<Proxy<S, O>> & FiggyPudding<S, O>
+  type ProxyFiggyPudding<S, O, P = {}> = Readonly<Proxy<S, O>> & FiggyPudding<S, O>
 
-  type PuddingFactory<S, O> = (...providers: any[]) => ProxyFiggyPudding<S, O>
+  type PuddingFactory<S, O> = <T extends any[]>(...providers: T) => ProxyFiggyPudding<S, O, P>
 
   interface FiggyPuddingConstructor {
     new <S extends Specs, O extends Options>(
@@ -53,7 +55,8 @@ declare module figgyPudding {
     readonly [Symbol.toStringTag]: 'FiggyPudding'
 
     get<K extends AvailableKeys<S, O>>(key: K): K extends keyof S ? SpecDefault<S[K]> : unknown
-    concat<P extends any[]>(...providers: P): ProxyFiggyPudding<S, O>
+    concat<P extends any[]>(...providers: ): ProxyFiggyPudding<S, O, P>
+    concat(...providers: any[]): ProxyFiggyPudding<S, O>
     toJSON(): {
       [K in AvailableKeys<S, O>]: K extends keyof S ? SpecDefault<S[K]> : unknown
     }
